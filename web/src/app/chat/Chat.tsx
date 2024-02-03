@@ -515,7 +515,7 @@ export const Chat = ({
               ref={scrollableDivRef}
             >
               {livePersona && (
-                <div className="sticky top-0 left-80 z-10 w-full bg-background/90">
+                <div className="sticky top-0 left-80 z-10 w-full bg-background/90 dark:bg-neutral-800/90">
                   <div className="ml-2 p-1 rounded mt-2 w-fit">
                     <ChatPersonaSelector
                       personas={availablePersonas}
@@ -735,7 +735,7 @@ export const Chat = ({
               </div>
             </div>
 
-            <div className="absolute bottom-0 z-10 w-full bg-background border-t border-border">
+            <div className="absolute bottom-0 z-10 w-full bg-background dark:bg-neutral-800 border-t dark:border-t-border-dark border-border dark:border-neutral-900">
               <div className="w-full pb-4 pt-2">
                 {!retrievalDisabled && (
                   <div className="flex">
@@ -766,7 +766,7 @@ export const Chat = ({
                         w-full
                         shrink
                         border 
-                        border-border 
+                        border-border dark:border-neutral-900 
                         rounded-lg 
                         outline-none 
                         placeholder-gray-400 
@@ -774,8 +774,9 @@ export const Chat = ({
                         pr-12 
                         py-4 
                         overflow-hidden
-                        h-14
-                        ${
+                        h-14 
+                        dark:bg-background-emphasis-dark
+                    ${
                           (textareaRef?.current?.scrollHeight || 0) >
                           MAX_INPUT_HEIGHT
                             ? "overflow-y-auto"
@@ -822,14 +823,14 @@ export const Chat = ({
                           <FiStopCircle
                             size={18}
                             className={
-                              "text-emphasis w-9 h-9 p-2 rounded-lg hover:bg-hover"
+                              "text-emphasis dark:text-gray-400 w-9 h-9 p-2 rounded-lg hover:bg-hover dark:hover:bg-neutral-800"
                             }
                           />
                         ) : (
                           <FiSend
                             size={18}
                             className={
-                              "text-emphasis w-9 h-9 p-2 rounded-lg " +
+                              "text-emphasis dark:text-gray-400 w-9 h-9 p-2 rounded-lg " +
                               (message ? "bg-blue-200" : "")
                             }
                           />

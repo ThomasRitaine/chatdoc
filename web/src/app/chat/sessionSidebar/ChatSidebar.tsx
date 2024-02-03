@@ -81,12 +81,13 @@ export const ChatSidebar = ({
         w-72
         2xl:w-80
         ${HEADER_PADDING}
-        border-r 
-        border-border 
+        border-r dark:border-r-border-dark 
+        border-border dark:border-neutral-900 
         flex 
         flex-col 
         h-screen
-        transition-transform`}
+        transition-transform 
+        dark:bg-background-emphasis-dark`}
       id="chat-sidebar"
     >
       <Link
@@ -111,7 +112,7 @@ export const ChatSidebar = ({
             if (chatSessions.length > 0) {
               return (
                 <div key={dateRange}>
-                  <div className="text-xs text-subtle flex pb-0.5 mb-1.5 mt-5 font-bold">
+                  <div className="text-xs text-subtle dark:text-neutral-400 flex pb-0.5 mb-1.5 mt-5 font-bold">
                     {dateRange}
                   </div>
                   {chatSessions.map((chat) => {
@@ -141,27 +142,27 @@ export const ChatSidebar = ({
       </div>
 
       <div
-        className="mt-auto py-2 border-t border-border px-3"
+        className="mt-auto py-2 border-t dark:border-t-border-dark border-border dark:border-neutral-900 px-3"
         ref={userInfoRef}
       >
-        <div className="relative text-strong">
+        <div className="relative text-strong dark:text-strong-dark">
           {userInfoVisible && (
             <div
               className={
                 (user ? "translate-y-[-110%]" : "translate-y-[-115%]") +
-                " absolute top-0 bg-background border border-border z-30 w-full rounded text-strong text-sm"
+                " absolute top-0 bg-background dark:bg-neutral-800 border border-border dark:border-neutral-900 z-30 w-full rounded text-strong dark:text-strong-dark text-sm"
               }
             >
               <Link
                 href="/search"
-                className="flex py-3 px-4 cursor-pointer hover:bg-hover"
+                className="flex py-3 px-4 cursor-pointer hover:bg-hover dark:hover:bg-neutral-800"
               >
                 <FiSearch className="my-auto mr-2" />
                 Chatdoc Search
               </Link>
               <Link
                 href="/chat"
-                className="flex py-3 px-4 cursor-pointer hover:bg-hover"
+                className="flex py-3 px-4 cursor-pointer hover:bg-hover dark:hover:bg-neutral-800"
               >
                 <FiMessageSquare className="my-auto mr-2" />
                 Chatdoc Chat
@@ -169,7 +170,7 @@ export const ChatSidebar = ({
               {(!user || user.role === "admin") && (
                 <Link
                   href="/admin/indexing/status"
-                  className="flex py-3 px-4 cursor-pointer border-t border-border hover:bg-hover"
+                  className="flex py-3 px-4 cursor-pointer border-t dark:border-t-border-dark border-border dark:border-neutral-900 hover:bg-hover dark:hover:bg-neutral-800"
                 >
                   <FiTool className="my-auto mr-2" />
                   Admin Panel
@@ -178,7 +179,7 @@ export const ChatSidebar = ({
               {user && (
                 <div
                   onClick={handleLogout}
-                  className="flex py-3 px-4 cursor-pointer border-t border-border rounded hover:bg-hover"
+                  className="flex py-3 px-4 cursor-pointer border-t dark:border-t-border-dark border-border dark:border-neutral-900 rounded hover:bg-hover dark:hover:bg-neutral-800"
                 >
                   <FiLogOut className="my-auto mr-2" />
                   Log out
