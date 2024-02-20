@@ -2,30 +2,20 @@ name: Sync Fork's Main Branch
 
 on:
   schedule:
-    - cron: '0 */12 * * *' # Runs at minute 0 past every 12th hour.
+    # Runs at minute 0 past every 12th hour.
+    - cron: '0 */12 * * *'
   workflow_dispatch:
 
 jobs:
-  sync-with-upstream:
+  sync:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out the repository
-      uses: actions/checkout@v3
-      with:
-        ref: main # Ensure we are on the main branch
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          ref: main # Ensure we are on the main branch
 
-    - name: Configure Git
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "thomas.ritaine@outlook.com"
-
-    - name: Add upstream remote
-      run: git remote add upstream https://github.com/danswer-ai/danswer.git || true
-
-    - name: Fetch the latest changes from upstream
-      run: git fetch upstream
-
-    - name: Merge upstream changes into fork
-      run: |
-        git merge upstream/main
-        git push
+      - name: Sync fork
+        run: gh repo sync danswer-ai/danswer -b main --force
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
