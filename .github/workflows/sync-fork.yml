@@ -16,6 +16,7 @@ jobs:
           ref: main # Ensure we are on the main branch
 
       - name: Sync fork
-        run: gh repo ThomasRitaine/chatdoc -b main --force
+        run: gh repo sync $REPO_NAME -b main --force
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_NAME: ${{ env.GITHUB_REPOSITORY }}
