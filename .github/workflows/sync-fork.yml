@@ -3,7 +3,7 @@ name: Sync Fork's Main Branch
 on:
   schedule:
     # Runs at minute 0 past every 12th hour.
-    - cron: '0 */12 * * *'
+    - cron: "0 */12 * * *"
   workflow_dispatch:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
           ref: main # Ensure we are on the main branch
 
       - name: Sync fork
-        run: gh repo sync $REPO_NAME -b main --force
+        run: gh repo sync $REPO_NAME -b clone --force
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO_NAME: ${{ env.GITHUB_REPOSITORY }}
