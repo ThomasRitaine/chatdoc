@@ -19,12 +19,6 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "thomas.ritaine@outlook.com"
 
-    - name: Sync with upstream
-      run: |
-        git fetch upstream
-        git merge upstream/main
-        git push origin main
-
     - name: Add upstream remote
       run: git remote add upstream https://github.com/danswer-ai/danswer.git || true
 
