@@ -127,7 +127,7 @@ services:
       - api_server
       - web_server
     volumes:
-      - deployment/data/nginx:/etc/nginx/conf.d
+      - ./deployment/data/nginx:/etc/nginx/conf.d
       #- ../data/sslcerts:/etc/nginx/sslcerts
     logging:
       driver: json-file
