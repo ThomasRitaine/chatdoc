@@ -142,8 +142,8 @@ services:
     command: >
       /bin/sh -c "dos2unix /etc/nginx/conf.d/run-nginx.sh
       && /etc/nginx/conf.d/run-nginx.sh app.conf.template.no-letsencrypt"
-    env_file:
-      - .env.nginx
+    environment:
+      - DOMAIN=localhost
     networks:
       - default
       - traefik
