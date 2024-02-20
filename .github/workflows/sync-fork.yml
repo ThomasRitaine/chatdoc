@@ -16,6 +16,6 @@ jobs:
           ref: main # Ensure we are on the main branch
 
       - name: Sync fork
-        run: gh repo sync danswer-ai/danswer -b main --force
+        run: gh repo ${{ env.GITHUB_REPOSITORY }} -b main --force
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
