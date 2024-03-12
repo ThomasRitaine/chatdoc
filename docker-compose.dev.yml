@@ -1,0 +1,193 @@
+version: "3"
+services:
+  api_server:
+    image: danswer/danswer-backend:latest
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    command: >
+      /bin/sh -c "alembic upgrade head &&
+      echo \"Starting Danswer Api Server\" &&
+      uvicorn danswer.main:app --host 0.0.0.0 --port 8080"
+    depends_on:
+      - relational_db
+      - index
+    restart: unless-stopped
+    env_file:
+      - .env.dev
+    environment:
+      - POSTGRES_HOST=relational_db
+      - VESPA_HOST=index
+    volumes:
+      - local_dynamic_storage:/home/storage
+      - file_connector_tmp_storage:/home/file_connector_storage
+      - model_cache_torch:/root/.cache/torch/
+      - model_cache_nltk:/root/nltk_data/
+      - model_cache_huggingface:/root/.cache/huggingface/
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "6"
+
+  background:
+    image: danswer/danswer-backend:latest
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    command: /usr/bin/supervisord
+    depends_on:
+      - relational_db
+      - index
+    restart: unless-stopped
+    env_file:
+      - .env.dev
+    environment:
+      - POSTGRES_HOST=relational_db
+      - VESPA_HOST=index
+    volumes:
+      - local_dynamic_storage:/home/storage
+      - file_connector_tmp_storage:/home/file_connector_storage
+      - model_cache_torch:/root/.cache/torch/
+      - model_cache_nltk:/root/nltk_data/
+      - model_cache_huggingface:/root/.cache/huggingface/
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "6"
+
+  web_server:
+    image: node:20-alpine
+    command: sh -c "yarn install && yarn dev"
+    depends_on:
+      - api_server
+    volumes:
+      - ./web:/app
+    working_dir: /app
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+      - NEXT_PUBLIC_DISABLE_STREAMING=${NEXT_PUBLIC_DISABLE_STREAMING:-false}
+      - NEXT_PUBLIC_NEW_CHAT_DIRECTS_TO_SAME_PERSONA=${NEXT_PUBLIC_NEW_CHAT_DIRECTS_TO_SAME_PERSONA:-false}
+      - DANSWER_VERSION=0.3-dev
+      - INTERNAL_URL=http://api_server:8080
+    env_file:
+      - .env.dev
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "6"
+
+  # web_server:
+  #   image: danswer/danswer-web-server:latest
+  #   build:
+  #     context: web
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - NEXT_PUBLIC_DISABLE_STREAMING=${NEXT_PUBLIC_DISABLE_STREAMING:-false}
+  #   depends_on:
+  #     - api_server
+  #   restart: unless-stopped
+  #   env_file:
+  #     - .env.dev
+  #   environment:
+  #     - INTERNAL_URL=http://api_server:8080
+  #   logging:
+  #     driver: json-file
+  #     options:
+  #       max-size: "50m"
+  #       max-file: "6"
+
+  relational_db:
+    image: postgres:15.2-alpine
+    restart: unless-stopped
+    # POSTGRES_USER and POSTGRES_PASSWORD should be set in .env.dev file
+    env_file:
+      - .env.dev
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "6"
+
+  # This container name cannot have an underscore in it due to Vespa expectations of the URL
+  index:
+    image: vespaengine/vespa:8.277.17
+    restart: unless-stopped
+    #ports:
+    #- "19071:19071"
+    #- "8081:8081"
+    volumes:
+      - vespa_volume:/opt/vespa/var
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "6"
+
+  nginx:
+    image: nginx:1.23.4-alpine
+    restart: unless-stopped
+    # nginx will immediately crash with `nginx: [emerg] host not found in upstream`
+    # if api_server / web_server are not up
+    depends_on:
+      - api_server
+      - web_server
+    volumes:
+      - ./deployment/data/nginx:/etc/nginx/conf.d
+      #- ../data/sslcerts:/etc/nginx/sslcerts
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "6"
+    # the specified script waits for the api_server to start up.
+    # Without this we've seen issues where nginx shows no error logs but
+    # does not recieve any traffic
+    # NOTE: we have to use dos2unix to remove Carriage Return chars from the file
+    # in order to make this work on both Unix-like systems and windows
+    command: >
+      /bin/sh -c "dos2unix /etc/nginx/conf.d/run-nginx.sh
+      && /etc/nginx/conf.d/run-nginx.sh app.conf.template.no-letsencrypt"
+    environment:
+      - DOMAIN=localhost
+    ports:
+      - "80:80"
+      - "443:443"
+
+  # Run with --profile model-server to bring up the danswer-model-server container
+  model_server:
+    image: danswer/danswer-model-server:latest
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile.model_server
+    profiles:
+      - "model-server"
+    command: uvicorn model_server.main:app --host 0.0.0.0 --port 9000
+    restart: unless-stopped
+    environment:
+      - DOCUMENT_ENCODER_MODEL=${DOCUMENT_ENCODER_MODEL:-}
+      - NORMALIZE_EMBEDDINGS=${NORMALIZE_EMBEDDINGS:-}
+      - MIN_THREADS_ML_MODELS=${MIN_THREADS_ML_MODELS:-}
+      # Set to debug to get more fine-grained logs
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    volumes:
+      - model_cache_torch:/root/.cache/torch/
+      - model_cache_huggingface:/root/.cache/huggingface/
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "6"
+
+volumes:
+  local_dynamic_storage:
+  file_connector_tmp_storage: # used to store files uploaded by the user temporarily while we are indexing them
+  db_volume:
+  vespa_volume:
+  model_cache_torch:
+  model_cache_nltk:
+  model_cache_huggingface:
