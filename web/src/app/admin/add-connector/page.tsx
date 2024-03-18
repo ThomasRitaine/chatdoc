@@ -49,8 +49,8 @@ export default function Page() {
       />
 
       <Text>
-        Connect Chatdoc to your organization&apos;s knowledge sources.
-        We&apos;ll automatically sync your data into Chatdoc, so you can find
+        Connect AthenaAI to your organization&apos;s knowledge sources.
+        We&apos;ll automatically sync your data into AthenaAI, so you can find
         exactly what you&apos;re looking for in one place.
       </Text>
 

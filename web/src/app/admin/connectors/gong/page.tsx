@@ -79,7 +79,7 @@ const Main = () => {
       {popup}
       <Text>
         This connector allows you to sync all your Gong Transcripts into
-        Chatdoc. More details on how to setup the Gong connector can be found in{" "}
+        AthenaAI. More details on how to setup the Gong connector can be found in{" "}
         <a
           className="text-link dark:text-blue-300"
           href="https://docs.danswer.dev/connectors/gong"

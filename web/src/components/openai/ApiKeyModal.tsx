@@ -40,7 +40,7 @@ export const ApiKeyModal = () => {
         <div>
           <div className="mb-2.5 text-base">
             Please provide a valid OpenAI API key below in order to start using
-            Chatdoc Search or Chatdoc Chat.
+            AthenaAI Search or AthenaAI Chat.
             <br />
             <br />
             Or if you&apos;d rather look around first,{" "}

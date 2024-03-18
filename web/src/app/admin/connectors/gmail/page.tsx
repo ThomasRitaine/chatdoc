@@ -223,7 +223,7 @@ const Main = () => {
       />
 
       <Title className="mb-2 mt-6 ml-auto mr-auto">
-        Step 2: Authenticate with Chatdoc
+        Step 2: Authenticate with AthenaAI
       </Title>
       <GmailOAuthSection
         setPopup={setPopup}

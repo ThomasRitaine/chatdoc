@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Chatdoc",
+  title: "AthenaAI",
   description: "Question answering for your documents",
 };
 

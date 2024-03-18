@@ -156,9 +156,9 @@ function Main() {
               To complete the initial setup, let&apos;s add a connector!
               <br />
               <br />
-              Connectors are the way that Chatdoc gets data from your
+              Connectors are the way that AthenaAI gets data from your
               organization&apos;s various data sources. Once setup, we&apos;ll
-              automatically sync data from your apps and docs into Chatdoc, so
+              automatically sync data from your apps and docs into AthenaAI, so
               you can search all through all of them in one place.
             </div>
             <div className="flex">
@@ -196,7 +196,7 @@ function Main() {
 
       <Text>
         Embedding models are used to generate embeddings for your documents,
-        which then power Chatdoc&apos;s search.
+        which then power AthenaAI&apos;s search.
       </Text>
 
       {currentModel ? (

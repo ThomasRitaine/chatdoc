@@ -146,8 +146,8 @@ export const SlackBotCreationForm = ({
               const errorMsg = responseJson.detail || responseJson.message;
               setPopup({
                 message: isUpdate
-                  ? `Error updating ChatdocBot config - ${errorMsg}`
-                  : `Error creating ChatdocBot config - ${errorMsg}`,
+                  ? `Error updating AthenaAIBot config - ${errorMsg}`
+                  : `Error creating AthenaAIBot config - ${errorMsg}`,
                 type: "error",
               });
             }
@@ -169,7 +169,7 @@ export const SlackBotCreationForm = ({
                       &apos;#ask-chatdoc&apos;.
                       <br />
                       <br />
-                      <i>NOTE</i>: you still need to add ChatdocBot to the
+                      <i>NOTE</i>: you still need to add AthenaAIBot to the
                       channel(s) in Slack itself. Setting this config will not
                       auto-add the bot to the channel.
                     </div>
@@ -204,7 +204,7 @@ export const SlackBotCreationForm = ({
 
                 <Divider />
 
-                <SectionHeader>When should ChatdocBot respond?</SectionHeader>
+                <SectionHeader>When should AthenaAIBot respond?</SectionHeader>
 
                 <BooleanFormField
                   name="answer_validity_check_enabled"
@@ -218,22 +218,22 @@ export const SlackBotCreationForm = ({
                 />
                 <BooleanFormField
                   name="respond_tag_only"
-                  label="Respond to @ChatdocBot Only"
-                  subtext="If set, ChatdocBot will only respond when directly tagged"
+                  label="Respond to @AthenaAIBot Only"
+                  subtext="If set, AthenaAIBot will only respond when directly tagged"
                 />
                 <BooleanFormField
                   name="respond_to_bots"
                   label="Responds to Bot messages"
-                  subtext="If not set, ChatdocBot will always ignore messages from Bots"
+                  subtext="If not set, AthenaAIBot will always ignore messages from Bots"
                 />
                 <TextArrayField
                   name="respond_team_member_list"
                   label="Team Members Emails"
-                  subtext={`If specified, ChatdocBot responses will only be 
+                  subtext={`If specified, AthenaAIBot responses will only be 
                   visible to members in this list. This is
-                  useful if you want ChatdocBot to operate in an
+                  useful if you want AthenaAIBot to operate in an
                   "assistant" mode, where it helps the team members find
-                  answers, but let's them build on top of ChatdocBot's response / throw 
+                  answers, but let's them build on top of AthenaAIBot's response / throw 
                   out the occasional incorrect answer.`}
                   values={values}
                 />
@@ -243,8 +243,8 @@ export const SlackBotCreationForm = ({
 
                 <BooleanFormField
                   name="still_need_help_enabled"
-                  label="Should Chatdoc give a “Still need help?” button?"
-                  subtext={`If specified, ChatdocBot's response will include a button at the bottom 
+                  label="Should AthenaAI give a “Still need help?” button?"
+                  subtext={`If specified, AthenaAIBot's response will include a button at the bottom 
                   of the response that asks the user if they still need help.`}
                 />
                 {values.still_need_help_enabled && (
@@ -259,7 +259,7 @@ export const SlackBotCreationForm = ({
                         button. For example, &apos;mark@acme.com&apos;.
                         <br />
                         Or provide a user group by either the name or the
-                        handle. For example, &apos;Chatdoc Team&apos; or
+                        handle. For example, &apos;AthenaAI Team&apos; or
                         &apos;chatdoc-team&apos;.
                         <br />
                         <br />
@@ -278,7 +278,7 @@ export const SlackBotCreationForm = ({
                   </SectionHeader>
                   <Text>
                     Use either a Persona <b>or</b> Document Sets to control how
-                    ChatdocBot answers.
+                    AthenaAIBot answers.
                   </Text>
                   <Text>
                     <ul className="list-disc mt-2 ml-4">
@@ -288,7 +288,7 @@ export const SlackBotCreationForm = ({
                       </li>
                       <li>
                         You should use Document Sets if you just want to control
-                        which documents ChatdocBot uses as references.
+                        which documents AthenaAIBot uses as references.
                       </li>
                     </ul>
                   </Text>
@@ -316,8 +316,8 @@ export const SlackBotCreationForm = ({
                           <div>
                             <div>
                               <SubLabel>
-                                The document sets that ChatdocBot should search
-                                through. If left blank, ChatdocBot will search
+                                The document sets that AthenaAIBot should search
+                                through. If left blank, AthenaAIBot will search
                                 through all documents.
                               </SubLabel>
                             </div>

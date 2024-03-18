@@ -65,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
               <Image src="/logo.png" alt="Logo" width="1419" height="1520" />
             </div>
             <h1 className="flex text-2xl text-strong dark:text-strong-dark font-bold my-auto dark:text-neutral-400">
-              Chatdoc
+              AthenaAI
             </h1>
           </div>
         </Link>

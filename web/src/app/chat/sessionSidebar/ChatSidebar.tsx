@@ -158,14 +158,14 @@ export const ChatSidebar = ({
                 className="flex py-3 px-4 cursor-pointer hover:bg-hover dark:hover:bg-neutral-800"
               >
                 <FiSearch className="my-auto mr-2" />
-                Chatdoc Search
+                AthenaAI Search
               </Link>
               <Link
                 href="/chat"
                 className="flex py-3 px-4 cursor-pointer hover:bg-hover dark:hover:bg-neutral-800"
               >
                 <FiMessageSquare className="my-auto mr-2" />
-                Chatdoc Chat
+                AthenaAI Chat
               </Link>
               {(!user || user.role === "admin") && (
                 <Link
