@@ -78,8 +78,8 @@ export const ChatSidebar = ({
   return (
     <div
       className={`
-        w-72
-        2xl:w-80
+        w-64
+        2xl:w-72
         ${HEADER_PADDING}
         border-r dark:border-r-border-dark 
         border-border dark:border-neutral-900 
@@ -131,14 +131,6 @@ export const ChatSidebar = ({
             }
           }
         )}
-        {/* {existingChats.map((chat) => {
-          const isSelected = currentChatId === chat.id;
-          return (
-            <div key={chat.id} className="mr-3">
-              <ChatSessionDisplay chatSession={chat} isSelected={isSelected} />
-            </div>
-          );
-        })} */}
       </div>
 
       <div
