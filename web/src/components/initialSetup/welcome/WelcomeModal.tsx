@@ -110,9 +110,9 @@ export function _WelcomeModal() {
             </Text>
             <div>
               <p>
-                Connectors are the way that Danswer gets data from your
+                Connectors are the way that AthenaAI gets data from your
                 organization&apos;s various data sources. Once setup, we&apos;ll
-                automatically sync data from your apps and docs into Danswer, so
+                automatically sync data from your apps and docs into AthenaAI, so
                 you can search through all of them in one place.
               </p>
 
@@ -144,11 +144,11 @@ export function _WelcomeModal() {
 
           <div className="mt-3">
             <div>
-              To start using Danswer as a secure ChatGPT, we just need to
+              To start using AthenaAI as a secure ChatGPT, we just need to
               configure our LLM!
               <br />
               <br />
-              Danswer supports connections with a wide range of LLMs, including
+              AthenaAI supports connections with a wide range of LLMs, including
               self-hosted open-source LLMs. For more details, check out the{" "}
               <a
                 className="text-link"
@@ -232,11 +232,11 @@ export function _WelcomeModal() {
       );
       break;
     default:
-      title = "🎉 Welcome to Danswer";
+      title = "🎉 Welcome to AthenaAI";
       body = (
         <>
           <div>
-            <p>How are you planning on using Danswer?</p>
+            <p>How are you planning on using AthenaAI?</p>
           </div>
           <Divider />
           <UsageTypeSection

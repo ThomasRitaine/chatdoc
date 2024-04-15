@@ -39,7 +39,7 @@ export const ApiKeyModal = () => {
         <div>
           <div className="mb-2.5 text-base">
             Please provide a valid OpenAI API key below in order to start using
-            Danswer Search or Danswer Chat.
+            AthenaAI Search or AthenaAI Chat.
             <br />
             <br />
             Or if you&apos;d rather look around first,{" "}
